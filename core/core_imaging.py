@@ -1,15 +1,19 @@
+import base64
+import io
+
 import pyautogui
 import pygetwindow as gw
-import base64
 import requests
-import io
 from PIL import Image
 
-# Assuming that the `activate_window_title` function is defined in another module correctly
-from window_focus import activate_windowt_title
+from .config import get_settings
 
+# Assuming that the `activate_window_title` function is defined in another module correctly
+
+# Get settings
+settings = get_settings()
 # OpenAI API Key
-api_key = 'insert_your_api_key_here'
+api_key = settings.openai_api_key
 
 
 # Function to focus a window given its title
@@ -39,16 +43,13 @@ def capture_screenshot(window=None, region=None):
 
 # Function to encode image data to base64
 def encode_image(image_data):
-    return base64.b64encode(image_data).decode('utf-8')
+    return base64.b64encode(image_data).decode("utf-8")
 
 
 # Function to analyze an image using OpenAI API
-def analyze_image(base64_image, window_title, additional_context='What’s in this image?'):
+def analyze_image(base64_image, window_title, additional_context="What’s in this image?"):
     # Your logic to call the OpenAI API
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
-    }
+    headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
 
     payload = {
         "model": "gpt-4-vision-preview",
@@ -56,20 +57,12 @@ def analyze_image(base64_image, window_title, additional_context='What’s in th
             {
                 "role": "assistant",
                 "content": [
-                    {
-                        "type": "text",
-                        "text": f"{additional_context}"
-                    },
-                    {
-                        "type": "image_url",
-                        "image_url": {
-                            "url": f"data:image/png;base64,{base64_image}"
-                        }
-                    }
-                ]
+                    {"type": "text", "text": f"{additional_context}"},
+                    {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{base64_image}"}},
+                ],
             }
         ],
-        "max_tokens": 300
+        "max_tokens": 300,
     }
 
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
@@ -81,7 +74,7 @@ def imaging(window_title=None, additional_context=None, x=None, y=None, screensh
     window = None
     region = None
 
-    if screenshot_size == 'Full screen':
+    if screenshot_size == "Full screen":
         # We don't need window focus or a specific region for a full-screen screenshot.
         pass
     elif window_title:  # If a window title is provided, focus on the window.
@@ -93,7 +86,11 @@ def imaging(window_title=None, additional_context=None, x=None, y=None, screensh
             # Adjust region to be relative to the window's top-left corner.
             window_box = window.box
             region = (
-            window_box.left + x - offset_x, window_box.top + y - offset_y, screenshot_size[0], screenshot_size[1])
+                window_box.left + x - offset_x,
+                window_box.top + y - offset_y,
+                screenshot_size[0],
+                screenshot_size[1],
+            )
         else:
             # If screenshot_size is not provided or is not 'Full screen', capture the whole window.
             region = (window.box.left, window.box.top, window.box.width, window.box.height)
@@ -101,7 +98,7 @@ def imaging(window_title=None, additional_context=None, x=None, y=None, screensh
     screenshot = capture_screenshot(window, region)
 
     # Optionally, paste the cursor onto the screenshot, adjusting for the offset if a region is specified
-    cursor_img_path = r'media\Mouse_pointer_small.png'
+    cursor_img_path = r"media\Mouse_pointer_small.png"
     with Image.open(cursor_img_path) as cursor:
         cursor = cursor.convert("RGBA")  # Ensure cursor image has an alpha channel for transparency
 
@@ -117,7 +114,7 @@ def imaging(window_title=None, additional_context=None, x=None, y=None, screensh
 
     # Convert the screenshot to bytes
     with io.BytesIO() as output_bytes:
-        screenshot.save(output_bytes, 'PNG')
+        screenshot.save(output_bytes, "PNG")
         bytes_data = output_bytes.getvalue()
 
     # Show a preview of the screenshot
@@ -132,17 +129,23 @@ def imaging(window_title=None, additional_context=None, x=None, y=None, screensh
 
 if __name__ == "__main__":
     app_name = "Firefox"
-    coordinates = {'x': 132, 'y': 458}
+    coordinates = {"x": 132, "y": 458}
     screenshot_size = (300, 300)
-    x = coordinates['x']
-    y = coordinates['y']
+    x = coordinates["x"]
+    y = coordinates["y"]
     pyautogui.moveTo(x, y, 0.5, pyautogui.easeOutQuad)
     single_step = "click on the 'Add a comment...' text input area"
 
     # Call imaging with the additional_context parameter if needed and the size parameter
     element_analysis = (
         f"You are an AI Agent called Element Analyzer that receives a screenshot of the element and analyzes it to check if the mouse is in the correct position to click the element to interact with.\n"
-        f"Element to interact with: {single_step}\nRespond only with \"Yes\" or \"No\"."
+        f'Element to interact with: {single_step}\nRespond only with "Yes" or "No".'
     )
-    analysis_result = imaging(window_title=app_name, additional_context=element_analysis, x=coordinates['x'], y=coordinates['y'], screenshot_size=screenshot_size)
+    analysis_result = imaging(
+        window_title=app_name,
+        additional_context=element_analysis,
+        x=coordinates["x"],
+        y=coordinates["y"],
+        screenshot_size=screenshot_size,
+    )
     print(analysis_result)

@@ -20,27 +20,52 @@ def enumerate_windows():
 
 
 def should_exclude_process(name):
-    excluded_processes = ['dwm.exe', 'nvcontainer.exe', 'nvidia broadcast ui.exe', 'system', 'python.exe', 'steam.exe',
-                          'TextInputHost.exe', 'pycharm64.exe', 'nvidia broadcast.exe', 'widgets.exe', 'amdow.exe',
-                          'CTkToplevel', 'AI Drone Assistant', 'Ctk', 'Ctk.exe', 'tk', 'tk.exe', 'Code', 'Code.exe',
-                          'NVIDIA Share.exe', 'NVIDIA Web Helper.exe', 'nvsphelper64.exe', 'NVIDIA GeForce Experience.exe',
-                          'nvcontainer.exe', 'NVDisplay.Container.exe', 'widgets.exe', 'translucenttb.exe', 'securityhealthsystray.exe']
+    excluded_processes = [
+        "dwm.exe",
+        "nvcontainer.exe",
+        "nvidia broadcast ui.exe",
+        "system",
+        "python.exe",
+        "steam.exe",
+        "TextInputHost.exe",
+        "pycharm64.exe",
+        "nvidia broadcast.exe",
+        "widgets.exe",
+        "amdow.exe",
+        "CTkToplevel",
+        "AI Drone Assistant",
+        "Ctk",
+        "Ctk.exe",
+        "tk",
+        "tk.exe",
+        "Code",
+        "Code.exe",
+        "NVIDIA Share.exe",
+        "NVIDIA Web Helper.exe",
+        "nvsphelper64.exe",
+        "NVIDIA GeForce Experience.exe",
+        "nvcontainer.exe",
+        "NVDisplay.Container.exe",
+        "widgets.exe",
+        "translucenttb.exe",
+        "securityhealthsystray.exe",
+    ]
     return name in excluded_processes
 
 
 def get_opened_programs():
-    wmi = win32com.client.GetObject('winmgmts:')
-    processes = wmi.InstancesOf('Win32_Process')
+    wmi = win32com.client.GetObject("winmgmts:")
+    processes = wmi.InstancesOf("Win32_Process")
     window_order = enumerate_windows()
     process_list = []
     added_titles = set()
 
     for process in processes:
         try:
-            name = process.Properties_('Name').Value
-            pid = process.Properties_('ProcessId').Value
-            creation_date = process.Properties_('CreationDate').Value
-            creation_datetime = datetime.strptime(creation_date.split('.')[0], '%Y%m%d%H%M%S')
+            name = process.Properties_("Name").Value
+            pid = process.Properties_("ProcessId").Value
+            creation_date = process.Properties_("CreationDate").Value
+            creation_datetime = datetime.strptime(creation_date.split(".")[0], "%Y%m%d%H%M%S")
 
             if should_exclude_process(name):
                 continue

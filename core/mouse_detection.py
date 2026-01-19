@@ -2,12 +2,16 @@ import ctypes
 import win32api
 import win32con
 
+
 # Define the CURSORINFO structure
 class CURSORINFO(ctypes.Structure):
-    _fields_ = [("cbSize", ctypes.c_int),
-                ("flags", ctypes.c_int),
-                ("hCursor", ctypes.c_void_p),
-                ("ptScreenPos", ctypes.c_long * 2)]
+    _fields_ = [
+        ("cbSize", ctypes.c_int),
+        ("flags", ctypes.c_int),
+        ("hCursor", ctypes.c_void_p),
+        ("ptScreenPos", ctypes.c_long * 2),
+    ]
+
 
 def get_cursor_shape():
     cursor_info = CURSORINFO()
@@ -34,6 +38,7 @@ def get_cursor_shape():
         return "The cursor is 'Cross'"
     else:
         return "Other"
+
 
 # while True:
 #     cursor_shape = get_cursor_shape()
