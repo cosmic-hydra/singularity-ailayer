@@ -1,21 +1,30 @@
-import customtkinter as Ctk
-from PIL import Image, ImageTk
-import time
 import random
-from queue import Queue
-import speech_recognition as sr
 import threading
-from voice import speaker, set_volume, set_subtitles
-from driver import assistant, act, fast_act, auto_role, perform_simulated_keypress, write_action
+import time
+from queue import Queue
+
+import customtkinter as Ctk
+import speech_recognition as sr
+from PIL import Image, ImageTk
+
+from .config import get_settings
+from .logging_config import get_logger, setup_logging
+from driver import act, assistant, auto_role, fast_act, perform_simulated_keypress, write_action
+from voice import set_subtitles, set_volume, speaker
 from window_focus import activate_windowt_title
 
+# Get settings and setup logging
+settings = get_settings()
+setup_logging(settings.log_level)
+logger = get_logger(__name__)
+
 # Initialize the speech recognition and text to speech engines
-assistant_voice_recognition_enabled = True  # Disable if you don't want to use voice recognition
-assistant_name_handle = "Ok Computer"  # Change this to your preferred name, will be used for voice activation.
-assistant_anim_enabled = True
-assistant_voice_enabled = True
+assistant_voice_recognition_enabled = settings.assistant_voice_recognition_enabled
+assistant_name_handle = settings.assistant_name
+assistant_anim_enabled = settings.assistant_animations_enabled
+assistant_voice_enabled = settings.assistant_voice_enabled
 set_volume(0.25)
-assistant_subtitles_enabled = True
+assistant_subtitles_enabled = settings.assistant_subtitles_enabled
 recognizer = sr.Recognizer()
 message_queue = Queue()
 Ctk.set_appearance_mode("dark")  # Modes: system (default), light, dark
@@ -26,22 +35,21 @@ def listen_to_speech():
     # Function to listen for speech and add the recognized text to the message queue
     with sr.Microphone() as source:
         try:
-            print("Assistant Listening...")
+            logger.info("Assistant listening for voice input")
             audio = recognizer.listen(source, timeout=5)  # Listen for 5 seconds
             message = recognizer.recognize_google(audio)
-            print("You said:", message)
+            logger.info("Voice input recognized", message=message)
             message_queue.put(message)
             return message
         except sr.UnknownValueError:
-            print("Google Speech Recognition could not understand audio")
+            logger.warning("Google Speech Recognition could not understand audio")
         except sr.RequestError as e:
-            print("Could not request results from Google Speech Recognition service; {0}".format(e))
+            logger.error("Could not request results from Google Speech Recognition service", error=str(e))
         except sr.WaitTimeoutError:
-            print("Listening timed out.")
+            logger.debug("Voice listening timed out")
         finally:
             # Schedule the function to be called again
             # root.after(1000, listen_to_speech) # This if you want to try it indefinitely.
-            print("Google Speech Recognition could not understand audio")
             pass
 
 
@@ -90,7 +98,7 @@ def end_drag(event):
         show_message(event, dragged_message)
         speaker(dragged_message)
         create_input_bubble(action=True)
-    print(f"Clicked on the assistant: {dragged_message}")
+    logger.debug("Assistant interaction", action=dragged_message)
 
 
 def create_input_bubble(action=False):
@@ -538,4 +546,12 @@ def create_app():
     root.mainloop()
     pass
 
-create_app()
+
+def main():
+    """Main entry point for the Singularity AI Assistant."""
+    logger.info("Starting Singularity AI Assistant", version="0.1.0")
+    create_app()
+
+
+if __name__ == "__main__":
+    main()

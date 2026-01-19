@@ -1,31 +1,39 @@
-from window_focus import activate_windowt_title, get_installed_apps_registry, open_windows_info
-from mouse_detection import get_cursor_shape
-from ocr import find_probable_click_position
-from window_elements import analyze_app
-from topmost_window import focus_topmost_window
-from core_imaging import imaging
-from last_app import last_programs_list
-from core_api import api_call
-from voice import speaker
-import pygetwindow as gw
-import win32process
-import win32gui
-import pyautogui
-import sqlite3
-import psutil
-import random
 import json
-import time
+import random
 import re
+import sqlite3
+import time
 import warnings
-warnings.simplefilter("ignore", UserWarning)
+
+import psutil
+import pyautogui
+import pygetwindow as gw
+import win32gui
+import win32process
 from pywinauto import Application
 
+from .config import get_settings
+from .logging_config import get_logger
+from core_api import api_call
+from core_imaging import imaging
+from last_app import last_programs_list
+from mouse_detection import get_cursor_shape
+from ocr import find_probable_click_position
+from topmost_window import focus_topmost_window
+from voice import speaker
+from window_elements import analyze_app
+from window_focus import activate_windowt_title, get_installed_apps_registry, open_windows_info
 
-low_data_mode = True  # Avoids the usage of visioning after the case generation. Lowers the accuracy but is way faster.
-enable_semantic_router_map = True  # Use this to enable the imaging semantic routing map. Improves accuracy of overall performance.
-enable_ocr = False  # Works better if this is disabled. Can use the implementations from other projects for better OCR.
-# Did not implement the OCR as it is not needed for the current implementation. The AI must work with the current data.
+warnings.simplefilter("ignore", UserWarning)
+
+# Get settings and logger
+settings = get_settings()
+logger = get_logger(__name__)
+
+# Configuration from settings
+low_data_mode = settings.low_data_mode
+enable_semantic_router_map = settings.enable_semantic_router_map
+enable_ocr = settings.enable_ocr
 
 if low_data_mode is True:  # Avoid the usage of visioning after the test case generation. Useful to execute faster case.
     visioning_match = False  # The coordinates will not use visioning during execution. Will use the imaging LLM call.
@@ -227,11 +235,11 @@ def assistant(assistant_goal="", keep_in_mind="", assistant_identity="", app_nam
         raise ValueError("ERROR: No step provided.")
     else:
         original_goal = assistant_goal
-        print(f"Prompt: {original_goal}")
+        logger.info("Processing user goal", goal=original_goal, called_from=called_from)
         if called_from == "assistant":
-            print(f"Called from: {called_from}")
+            logger.debug("Called from assistant interface")
         else:
-            print(f"Prompt: \"{original_goal}\".")
+            logger.info("Generating testcase from prompt", prompt=original_goal)
             speaker(f"Assistant is generating a testcase with the prompt: \"{original_goal}\".")
 
     # 'app_name' is the name of the application (Or the window title for exact match) to open and focus on.
@@ -239,11 +247,11 @@ def assistant(assistant_goal="", keep_in_mind="", assistant_identity="", app_nam
         app_name = activate_windowt_title(get_application_title(original_goal))
     else:
         app_name = activate_windowt_title(app_name)
-    print(f"AI Analyzing: {app_name}")
+    logger.info("Analyzing application", app_name=app_name)
 
     # 'execute_json_case' is the JSON test case to execute. If no JSON is provided, generate a new one.
     if not execute_json_case:
-        print(f"\nGenerating a test case with the assistant. Image visioning started. Analyzing the application {app_name} for context.\n")
+        logger.info("Generating test case with vision analysis", app_name=app_name)
         additional_context = (
             f"You are an AI Agent called Windows AI that is capable to operate freely all applications on Windows by only using natural language.\n"
             f"You will receive a goal and will try to accomplish it using Windows. Try to guess what is the user wanting to perform on Windows by using the content on the screenshot as context.\n"
@@ -251,7 +259,7 @@ def assistant(assistant_goal="", keep_in_mind="", assistant_identity="", app_nam
             f"Basing on the elements from the screenshot reply the current status of the system and specify it in detail.\n"
             f"Focused application: \"{app_name}\".\nGoal: \"{assistant_goal}\".")
         assistant_goal = imaging(window_title=app_name, additional_context=additional_context, screenshot_size='Full screen')['choices'][0]['message']['content']
-        print(f"Generating the test case to achieve the user prompt: {original_goal}\n{assistant_goal}")
+        logger.info("Test case generation started", original_goal=original_goal, enhanced_goal=assistant_goal)
         step_creator = [{"role": "assistant",
                          "content": f"You are an AI capable to operate the Windows 11 Operating System by using natural language.\n"
                                     f"Examples: \"Click on the search button. Insert the text_entry. Play the first element searched.\".\n"

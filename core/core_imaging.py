@@ -1,15 +1,20 @@
+import base64
+import io
+
 import pyautogui
 import pygetwindow as gw
-import base64
 import requests
-import io
 from PIL import Image
+
+from .config import get_settings
 
 # Assuming that the `activate_window_title` function is defined in another module correctly
 from window_focus import activate_windowt_title
 
+# Get settings
+settings = get_settings()
 # OpenAI API Key
-api_key = 'insert_your_api_key_here'
+api_key = settings.openai_api_key
 
 
 # Function to focus a window given its title

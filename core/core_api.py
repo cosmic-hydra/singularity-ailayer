@@ -1,8 +1,12 @@
 from openai import OpenAI
 
-client = OpenAI(api_key='insert_your_api_key_here')
+from .config import get_settings
+
+# Get settings and initialize OpenAI client
+settings = get_settings()
+client = OpenAI(api_key=settings.openai_api_key)
 # Available models: "gpt-4-1106-preview", "gpt-3.5-turbo-1106", or "davinci-codex"
-MODEL_NAME = "gpt-3.5-turbo-1106"
+MODEL_NAME = settings.openai_model
 
 
 def api_call(messages, model_name=MODEL_NAME, temperature=0.5, max_tokens=150):
