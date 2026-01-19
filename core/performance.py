@@ -3,6 +3,7 @@
 This module provides caching and optimization features to enable
 faster navigation and task execution.
 """
+
 import functools
 import hashlib
 import json

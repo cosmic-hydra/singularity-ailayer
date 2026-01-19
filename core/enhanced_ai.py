@@ -3,6 +3,7 @@
 This module provides improved AI decision-making, context awareness,
 and task optimization features.
 """
+
 import json
 from typing import Any, Dict, List, Optional
 
@@ -67,9 +68,7 @@ class EnhancedAI:
         logger.info("Goal analysis complete", confidence=analysis["confidence"])
         return analysis
 
-    def generate_optimized_actions(
-        self, goal: str, app_name: str, use_vision: bool = True
-    ) -> List[Dict[str, str]]:
+    def generate_optimized_actions(self, goal: str, app_name: str, use_vision: bool = True) -> List[Dict[str, str]]:
         """Generate optimized action sequence for a goal.
 
         Args:
@@ -81,6 +80,8 @@ class EnhancedAI:
             List of optimized actions
         """
         logger.info("Generating optimized actions", goal=goal, app=app_name, vision=use_vision)
+
+        from .core_api import api_call
 
         # Check cache first for common patterns
         cache_key = f"actions:{app_name}:{goal}"

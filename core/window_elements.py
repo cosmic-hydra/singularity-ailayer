@@ -19,7 +19,9 @@ def walk_control(control, indent=0, control_type=None, search_strings=None):
             print(f"{' ' * indent}Error getting properties: {e}")
 
     for child in control.GetChildren():
-        child_matched, child_unmatched = walk_control(child, indent + 2, control_type=control_type, search_strings=search_strings)
+        child_matched, child_unmatched = walk_control(
+            child, indent + 2, control_type=control_type, search_strings=search_strings
+        )
         matched.extend(child_matched)
         unmatched.extend(child_unmatched)
     return matched, unmatched
@@ -27,15 +29,15 @@ def walk_control(control, indent=0, control_type=None, search_strings=None):
 
 def sort_and_categorize_rects(controls_with_rects, size_category_to_print=None):
     sorted_by_area = sorted(controls_with_rects, key=lambda x: x[1], reverse=True)
-    categorized = {'Bigger': [], 'Medium': [], 'Small': []}
+    categorized = {"Bigger": [], "Medium": [], "Small": []}
 
     for control, area in sorted_by_area:
         if area >= 1000000:
-            categorized['Bigger'].append(control)
+            categorized["Bigger"].append(control)
         elif area >= 100000:
-            categorized['Medium'].append(control)
+            categorized["Medium"].append(control)
         else:
-            categorized['Small'].append(control)
+            categorized["Small"].append(control)
 
     output = []
     for category, controls in categorized.items():
@@ -64,10 +66,12 @@ def analyze_app(application_name_contains=None, size_category=None, additional_s
     if not control.Exists(0, 0):
         return f'Application with title containing "{application_name_contains}" is not running or window not found.'
 
-    search_strings = additional_search_options.lower().split(',') if additional_search_options else []
+    search_strings = additional_search_options.lower().split(",") if additional_search_options else []
     search_strings = [s.strip() for s in search_strings if s.strip()]
 
-    matched_controls_with_rects, unmatched_controls_with_rects = walk_control(control, control_type=None, search_strings=search_strings)
+    matched_controls_with_rects, unmatched_controls_with_rects = walk_control(
+        control, control_type=None, search_strings=search_strings
+    )
 
     output = "Matched controls:\n"
     output += sort_and_categorize_rects(matched_controls_with_rects, size_category_to_print=size_category)
@@ -77,8 +81,8 @@ def analyze_app(application_name_contains=None, size_category=None, additional_s
 
 
 # Usage example
-if __name__ == '__main__':
+if __name__ == "__main__":
     search_options = "contenteditable"
-    search_terms = search_options.replace('', '').strip()
+    search_terms = search_options.replace("", "").strip()
     print(search_terms)
-    print(analyze_app(application_name_contains='Firefox', additional_search_options=search_terms))
+    print(analyze_app(application_name_contains="Firefox", additional_search_options=search_terms))

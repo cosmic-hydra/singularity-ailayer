@@ -3,7 +3,7 @@
 This module implements security controls to protect the system
 from potentially harmful actions.
 """
-import os
+
 import re
 from pathlib import Path
 from typing import List, Optional, Set

@@ -1,4 +1,5 @@
 """Configuration management with environment variable support."""
+
 from pathlib import Path
 from typing import Optional
 

@@ -74,7 +74,7 @@ def on_drag(event):
     is_dragging = True
     x = root.winfo_pointerx() - offset_x
     y = root.winfo_pointery() - offset_y
-    root.geometry(f'+{x}+{y}')
+    root.geometry(f"+{x}+{y}")
     label.configure(image=assistant_dragging_photo)
 
 
@@ -110,17 +110,24 @@ def create_input_bubble(action=False):
     bubble_y = root.winfo_y() + (assistant_photo_height // 2) - (bubble_height // 2) + 40
     # Create bubble as a top-level window
     bubble = Ctk.CTkToplevel(root)
-    bubble.attributes('-alpha', 0.85)
+    bubble.attributes("-alpha", 0.85)
     bubble.bind("<Escape>", lambda e: bubble.destroy())
     bubble.bind("<FocusOut>", lambda e: bubble.destroy())
     bubble.overrideredirect(True)
-    bubble.attributes('-topmost', True)
-    bubble.geometry(f'{bubble_width}x{bubble_height}+{bubble_x}+{bubble_y}')
+    bubble.attributes("-topmost", True)
+    bubble.geometry(f"{bubble_width}x{bubble_height}+{bubble_x}+{bubble_y}")
     # Create the entry widget
-    entry = Ctk.CTkEntry(bubble, corner_radius=6, placeholder_text_color="#0b2d39",
-                         fg_color="#e1f2f1", text_color="#040f13",
-                         placeholder_text="Type here the action to perform...", width=450,
-                         border_width=1, border_color="darkgray")
+    entry = Ctk.CTkEntry(
+        bubble,
+        corner_radius=6,
+        placeholder_text_color="#0b2d39",
+        fg_color="#e1f2f1",
+        text_color="#040f13",
+        placeholder_text="Type here the action to perform...",
+        width=450,
+        border_width=1,
+        border_color="darkgray",
+    )
     entry.bind("<Escape>", lambda e: bubble.destroy())
     entry.pack(padx=0, pady=0)
     # Force focus on the entry and bubble
@@ -136,6 +143,7 @@ def create_input_bubble(action=False):
     # Make sure bubble is focused as well when clicking on it
     bubble.bind("<FocusIn>", lambda e: entry.focus_force())
     return bubble  # Returning bubble reference in case it needs to be accessed
+
 
 def process_input_and_close(bubble, entry, action=False):
     user_input = entry.get()
@@ -157,6 +165,7 @@ def process_input_and_close(bubble, entry, action=False):
             # assistant(user_input.strip())
         # auto_prompt(user_input.strip())
     bubble.destroy()  # Ensure the bubble is destroyed after submission
+
 
 def listen_and_respond():
     action = listen_to_speech()
@@ -184,7 +193,7 @@ def show_message(event=None, message="Hello! How can I help you?"):
     # Function to show a pop-up message bubble
     message_window = Ctk.CTkToplevel(root)  # Create a new window
     message_window.overrideredirect(True)  # Remove the window border
-    message_window.attributes('-topmost', True)  # Keep the window on top
+    message_window.attributes("-topmost", True)  # Keep the window on top
     # Get dimensions for the message window
     # temp_label = Ctk.CTkLabel(message_window, text=message)
     # temp_label.pack()
@@ -209,12 +218,13 @@ def show_message(event=None, message="Hello! How can I help you?"):
     if pos_y < 0:
         pos_y = 0
     # Set the geometry and display the message
-    message_window.geometry(f'+{pos_x}+{pos_y}')
+    message_window.geometry(f"+{pos_x}+{pos_y}")
     message_label = Ctk.CTkLabel(message_window, text=message)
     message_label.configure(corner_radius=6, fg_color="#e1f2f1", text_color="black", bg_color="gray")
     message_label.pack(padx=0, pady=0)
     # Close the message bubble after 3 seconds
     message_window.after(3000, message_window.destroy)
+
 
 def create_context_menu(event_x_root, event_y_root):
     global context_menu_ref, assistant_voice_enabled, assistant_anim_enabled, assistant_subtitles_enabled, assistant_voice_recognition_enabled  # Use the global references
@@ -222,8 +232,8 @@ def create_context_menu(event_x_root, event_y_root):
     # Create a custom context menu using Ctk widgets
     context_menu = Ctk.CTkToplevel(root)
     context_menu.overrideredirect(True)
-    context_menu.attributes('-topmost', True)
-    context_menu.attributes('-alpha', 0.95)  # Set transparency (0.0 to 1.0)
+    context_menu.attributes("-topmost", True)
+    context_menu.attributes("-alpha", 0.95)  # Set transparency (0.0 to 1.0)
     # Set the theme to light
     # Change buttons color
     # Ctk.set_default_color_theme("dark-blue")  # Themes: blue (default), dark-blue, green
@@ -234,6 +244,7 @@ def create_context_menu(event_x_root, event_y_root):
     # Frame to hold menu items
     menu_frame = Ctk.CTkFrame(context_menu)
     menu_frame.pack()
+
     # Wrapper function to execute command and close the menu
     def menu_command(command):
         if callable(command):
@@ -244,8 +255,12 @@ def create_context_menu(event_x_root, event_y_root):
         context_menu.destroy()  # Destroy the menu after executing the command
 
     # Buttons with commands
-    Ctk.CTkButton(menu_frame, text="Call assistant", command=lambda: menu_command(generate_assistant_test_case(False))).pack(fill="x")
-    Ctk.CTkButton(menu_frame, text="Fast action", command=lambda: menu_command(generate_assistant_test_case(True))).pack(fill="x")
+    Ctk.CTkButton(
+        menu_frame, text="Call assistant", command=lambda: menu_command(generate_assistant_test_case(False))
+    ).pack(fill="x")
+    Ctk.CTkButton(
+        menu_frame, text="Fast action", command=lambda: menu_command(generate_assistant_test_case(True))
+    ).pack(fill="x")
     Ctk.CTkButton(menu_frame, text="Content analysis", command=lambda: menu_command(dummy_command)).pack(fill="x")
 
     # Add separator or space between groups of options (This is an improvisation since Ctk doesn't have a separator widget)
@@ -255,7 +270,9 @@ def create_context_menu(event_x_root, event_y_root):
     volume_option = "Enable assistant voice" if not assistant_voice_enabled else "Disable assistant voice"
     anim_option = "Enable animations" if not assistant_anim_enabled else "Disable animations"
     subs_option = "Enable subtitles" if not assistant_subtitles_enabled else "Disable subtitles"
-    voice_option = "Enable voice recognition" if not assistant_voice_recognition_enabled else "Disable voice recognition"
+    voice_option = (
+        "Enable voice recognition" if not assistant_voice_recognition_enabled else "Disable voice recognition"
+    )
     # Add the buttons to the menu frame
     Ctk.CTkButton(menu_frame, text=volume_option, command=lambda: menu_command(toggle_volume)).pack(fill="x")
     Ctk.CTkButton(menu_frame, text=anim_option, command=lambda: menu_command(toggle_animations)).pack(fill="x")
@@ -288,6 +305,7 @@ def create_context_menu(event_x_root, event_y_root):
     context_menu_ref = context_menu  # Store the reference to the menu in a global variable
     return context_menu_ref
 
+
 def minimize_assistant():
     root.withdraw()
     root.overrideredirect(False)
@@ -299,10 +317,12 @@ def show_config(event):
     # Function to display the settings menu using a custom context menu
     create_context_menu(event.x_root, event.y_root)
 
+
 # Just for example purpose, you will replace this with actual commands
 def dummy_command():
     speaker("Dummy item clicked")
     print("Dummy item clicked")
+
 
 def generate_assistant_test_case(fast_act=False):
     # Function to perform a fast action
@@ -314,6 +334,7 @@ def generate_assistant_test_case(fast_act=False):
         speaker("What's the test-case to generate?")
         print("What's the test-case to generate?")
         create_input_bubble(fast_act)
+
 
 def toggle_voice_recognition():
     global assistant_voice_recognition_enabled
@@ -331,7 +352,7 @@ def toggle_animations():
     assistant_anim_enabled = not assistant_anim_enabled
     if assistant_anim_enabled:
         animate_blink()  # Restart blinking animation
-        animate_move()   # Restart moving animation
+        animate_move()  # Restart moving animation
         show_message(None, "Animations enabled")
     else:
         show_message(None, "Animations disabled")
@@ -371,7 +392,7 @@ def restart_assistant():
     pass
 
 
-def calculate_duration_of_speech(text, lang='en', wpm=150):
+def calculate_duration_of_speech(text, lang="en", wpm=150):
     # Estimate the duration the subtitles should be displayed based on words per minute (WPM)
     duration_in_seconds = (len(text.split()) / wpm) * 60
     return int(duration_in_seconds * 1000)  # Convert to milliseconds for tkinter's after method
@@ -392,7 +413,7 @@ def animate_move(step=0, direction=1, amplitude=3, start_time=1):
         start_time = time.time()
     if assistant_anim_enabled and not is_dragging:
         new_position = position_bottom + amplitude * direction * (1 - abs(step / max_steps * 2 - 1))
-        root.geometry(f'+{position_right}+{int(new_position)}')
+        root.geometry(f"+{position_right}+{int(new_position)}")
         next_step = step + 1
         if next_step > max_steps:
             current_time = time.time()
@@ -445,18 +466,35 @@ def listen_thread():
                         print("Double clicking on:", message)
                         fast_act(single_step=message.strip("double "), double_click=True)
                     # Or if message starts with the first word click and
-                    elif "click on" in message_low[0:8] or "click the" in message_low[0:9] or "click" in message_low[0:5]:
+                    elif (
+                        "click on" in message_low[0:8] or "click the" in message_low[0:9] or "click" in message_low[0:5]
+                    ):
                         print("Clicking on:", message)
                         fast_act(single_step=message)
                     elif "press" in message_low[0:5]:
                         print("press: ", message)
                         perform_simulated_keypress(message.strip("press ").strip(""))
-                    elif "type" in message_low[0:4] or "write" in message_low[0:5] or "bright" in message_low[0:6] or "great" in message_low[0:5]:
+                    elif (
+                        "type" in message_low[0:4]
+                        or "write" in message_low[0:5]
+                        or "bright" in message_low[0:6]
+                        or "great" in message_low[0:5]
+                    ):
                         # Remove "bright ", "write ", "type ", "great " from the message:
-                        new_message = message.replace("bright ", "").replace("write ", "").replace("type ", "").replace("great ", "")
+                        new_message = (
+                            message.replace("bright ", "")
+                            .replace("write ", "")
+                            .replace("type ", "")
+                            .replace("great ", "")
+                        )
                         print("Typing:", new_message)
                         write_action(goal=new_message, last_step="text_entry")
-                    elif "reminder" in message_low or "remind" in message_low or "timer" in message_low or "alarm" in message_low:
+                    elif (
+                        "reminder" in message_low
+                        or "remind" in message_low
+                        or "timer" in message_low
+                        or "alarm" in message_low
+                    ):
                         # Call internal_clock.py - Generated.
                         # Here's thoughts of when remind the user if is not noticing any important upcoming event:
                         # Advice the user for upcoming events. Add reminders, timers, alarms, etc.
@@ -464,6 +502,7 @@ def listen_thread():
                     elif "scroll" in message_low[0:6]:
                         print("Scrolling: ", message)
                         import pyautogui
+
                         pyautogui.scroll(-850)
                     else:
                         auto_prompt(message)
@@ -489,7 +528,7 @@ def auto_prompt(message):
         assistant_thread = threading.Thread(target=run_assistant, args=(message,))
         assistant_thread.start()
     elif "joyful_conversation" in role_function:
-        message_queue.put(f"{role_function.strip(f'joyful_conversation').strip(' - ')} How can I help you?")
+        message_queue.put(f"{role_function.strip('joyful_conversation').strip(' - ')} How can I help you?")
     else:
         print("NOT WORKING")
 
@@ -506,16 +545,16 @@ def load_image(file_path, scale=0.333):
 
 
 def create_app():
-    global root, label, assistant_photo, assistant_dragging_photo, assistant_blink_photo, assistant_anim_enabled, is_dragging, position_right, position_bottom, drag_time, \
-        assistant_voice_enabled, assistant_subtitles_enabled, assistant_name_handle, assistant_photo_width, assistant_photo_height, scale_factor # Add width and height globals
+    global root, label, assistant_photo, assistant_dragging_photo, assistant_blink_photo, assistant_anim_enabled, is_dragging, position_right, position_bottom, drag_time, assistant_voice_enabled, assistant_subtitles_enabled, assistant_name_handle, assistant_photo_width, assistant_photo_height, scale_factor  # Add width and height globals
     import ctypes
+
     ctypes.windll.shcore.SetProcessDpiAwareness(1)
     root = Ctk.CTk()
     root.title("AI Drone Assistant")
     root.iconbitmap("media/headico.ico")
     root.overrideredirect(True)
-    root.attributes('-topmost', True)
-    root.wm_attributes("-transparentcolor", 'gray')
+    root.attributes("-topmost", True)
+    root.wm_attributes("-transparentcolor", "gray")
 
     # Load images and get their sizes
     assistant_photo, assistant_photo_width, assistant_photo_height = load_image("media/assistant_transparent.png")
@@ -523,10 +562,10 @@ def create_app():
     assistant_blink_photo, _, _ = load_image("media/assistant_transparent_blink.png")
     label = Ctk.CTkLabel(root, image=assistant_photo, bg_color="gray", cursor="hand2", text="")
     label.pack()
-    label.bind('<ButtonPress-1>', start_drag)
-    label.bind('<B1-Motion>', on_drag)
-    label.bind('<ButtonRelease-1>', end_drag)
-    label.bind('<ButtonPress-3>', show_config)
+    label.bind("<ButtonPress-1>", start_drag)
+    label.bind("<B1-Motion>", on_drag)
+    label.bind("<ButtonRelease-1>", end_drag)
+    label.bind("<ButtonPress-3>", show_config)
 
     # Calculate initial position (bottom right)
     screen_width = root.winfo_screenwidth()
@@ -537,7 +576,7 @@ def create_app():
     drag_time = time.time()
 
     # Set initial geometry to place the assistant at the bottom right
-    root.geometry(f'+{position_right}+{position_bottom}')
+    root.geometry(f"+{position_right}+{position_bottom}")
     is_dragging = False  # Flag to track dragging state
     root.after(1000, animate_blink)  # Start the blinking animation
     root.after(1000, animate_move)  # Start the moving animation

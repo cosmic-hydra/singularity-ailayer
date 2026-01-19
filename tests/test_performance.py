@@ -1,4 +1,5 @@
 """Tests for performance optimization module."""
+
 import time
 
 import pytest
@@ -73,12 +74,15 @@ class TestPerformanceCache:
         assert cache.get("key1") is None
         assert cache.get("key2") is None
 
-    def test_cached_decorator(self, tmp_path):
+    def test_cached_decorator(self, tmp_path, monkeypatch):
         """Test cached decorator."""
-        from core.performance import cached, PerformanceCache, get_cache
+        from core.performance import PerformanceCache, cached
 
-        # Reset cache
-        cache = PerformanceCache(cache_dir=tmp_path)
+        # Clear any existing cache and set up fresh one
+        import core.performance
+
+        fresh_cache = PerformanceCache(cache_dir=tmp_path / "test_cache")
+        monkeypatch.setattr(core.performance, "_cache", fresh_cache)
 
         call_count = {"value": 0}
 

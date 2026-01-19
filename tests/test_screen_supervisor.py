@@ -1,4 +1,5 @@
 """Tests for screen supervision module."""
+
 import time
 
 import pytest
@@ -44,7 +45,7 @@ class TestScreenSupervisor:
             callback_triggered["value"] = True
 
         supervisor = ScreenSupervisor(callback=test_callback)
-        
+
         # Mock screen change detection
         with patch.object(supervisor, "_check_screen_changes") as mock_check:
             mock_check.side_effect = lambda: test_callback()

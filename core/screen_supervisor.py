@@ -3,6 +3,7 @@
 This module provides continuous screen monitoring capabilities for
 proactive assistance and faster task execution.
 """
+
 import threading
 import time
 from typing import Callable, Optional
