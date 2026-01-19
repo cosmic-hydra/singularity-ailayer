@@ -1,5 +1,4 @@
 """Configuration management with environment variable support."""
-import os
 from pathlib import Path
 from typing import Optional
 
@@ -31,6 +30,16 @@ class Settings(BaseSettings):
 
     # Logging
     log_level: str = Field(default="INFO", env="LOG_LEVEL")
+
+    # Performance & Monitoring (New Features)
+    enable_screen_supervision: bool = Field(default=False, env="ENABLE_SCREEN_SUPERVISION")
+    enable_performance_cache: bool = Field(default=True, env="ENABLE_PERFORMANCE_CACHE")
+    enable_enhanced_ai: bool = Field(default=True, env="ENABLE_ENHANCED_AI")
+    enable_security_validation: bool = Field(default=True, env="ENABLE_SECURITY_VALIDATION")
+
+    # Performance Settings
+    cache_ttl_seconds: int = Field(default=3600, env="CACHE_TTL_SECONDS")
+    screen_monitor_interval: float = Field(default=2.0, env="SCREEN_MONITOR_INTERVAL")
 
     class Config:
         env_file = ".env"

@@ -1,12 +1,10 @@
 import subprocess
 import os
 import ctypes
-import sys
 import time
 import winreg
 from fuzzywuzzy import fuzz
 import pygetwindow as gw
-import uiautomation as auto
 import win32gui
 import win32process
 import psutil

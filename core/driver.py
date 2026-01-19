@@ -22,7 +22,7 @@ from ocr import find_probable_click_position
 from topmost_window import focus_topmost_window
 from voice import speaker
 from window_elements import analyze_app
-from window_focus import activate_windowt_title, get_installed_apps_registry, open_windows_info
+from window_focus import activate_windowt_title, get_installed_apps_registry
 
 warnings.simplefilter("ignore", UserWarning)
 

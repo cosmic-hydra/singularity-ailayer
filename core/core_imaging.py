@@ -9,7 +9,6 @@ from PIL import Image
 from .config import get_settings
 
 # Assuming that the `activate_window_title` function is defined in another module correctly
-from window_focus import activate_windowt_title
 
 # Get settings
 settings = get_settings()

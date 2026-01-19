@@ -1,6 +1,4 @@
 """Tests for driver module."""
-import pytest
-from unittest.mock import patch, MagicMock
 
 
 class TestActionParsing:

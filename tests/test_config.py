@@ -1,5 +1,4 @@
 """Tests for configuration management."""
-import os
 
 import pytest
 
