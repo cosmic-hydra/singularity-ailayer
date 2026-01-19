@@ -9,9 +9,9 @@ from PIL import Image
 
 from .config import get_settings
 from .logging_config import get_logger, setup_logging
-from driver import assistant, auto_role, fast_act, perform_simulated_keypress, write_action
-from voice import set_subtitles, set_volume, speaker
-from window_focus import activate_windowt_title
+from .driver import assistant, auto_role, fast_act, perform_simulated_keypress, write_action
+from .voice import set_subtitles, set_volume, speaker
+from .window_focus import activate_windowt_title
 
 # Get settings and setup logging
 settings = get_settings()
