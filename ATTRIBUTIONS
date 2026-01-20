@@ -1,6 +1,6 @@
-Attributions for PyWinAssistant
+Attributions for Singularity
 
-PyWinAssistant incorporates the following third-party modules, each with its own license:
+Singularity incorporates the following third-party modules, each with its own license:
     openai: MIT license. More information is available at [https://github.com/openai/openai-python].
     pywinauto: Licensed under BSD-3-Clause license . More information at [https://pywinauto.readthedocs.io/en/latest/contents.html].
     pyautogui: Licensed under the BSD-3-Clause license. Details at [https://github.com/asweigart/pyautogui].
@@ -18,4 +18,4 @@ PyWinAssistant incorporates the following third-party modules, each with its own
     tkinter: Part of Python's standard library, covered by the PSF license. [https://github.com/python/cpython/tree/3.12]
 
 
-Each module is the property of its respective owners, and PyWinAssistant is in no way affiliated with these modules.
+Each module is the property of its respective owners, and Singularity is in no way affiliated with these modules.
