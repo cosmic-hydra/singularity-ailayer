@@ -1,6 +1,7 @@
 """Tests for configuration management."""
 
 import pytest
+from pydantic import ValidationError
 
 
 class TestSettings:
@@ -39,5 +40,5 @@ class TestSettings:
 
         from core.config import Settings
 
-        with pytest.raises(Exception):  # Pydantic validation error
+        with pytest.raises(ValidationError):
             Settings()
