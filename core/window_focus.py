@@ -1,19 +1,16 @@
 import subprocess
 import os
 import ctypes
-import sys
 import time
 import winreg
 from fuzzywuzzy import fuzz
 import pygetwindow as gw
-import uiautomation as auto
 import win32gui
 import win32process
 import psutil
-import winreg
 
 # Define necessary functions from the user32 DLL
-user32 = ctypes.WinDLL('user32', use_last_error=True)
+user32 = ctypes.WinDLL("user32", use_last_error=True)
 EnumWindows = user32.EnumWindows
 GetForegroundWindow = user32.GetForegroundWindow
 EnumWindowsProc = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_void_p, ctypes.c_void_p)
@@ -29,11 +26,12 @@ ShowWindow = user32.ShowWindow
 SW_RESTORE = 9
 SW_SHOW = 5
 
+
 def get_installed_apps_registry():
     installed_apps = []
     reg_paths = [
-        r'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall',
-        r'SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
+        r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+        r"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall",
     ]
     for reg_path in reg_paths:
         with winreg.ConnectRegistry(None, winreg.HKEY_LOCAL_MACHINE) as hkey:
@@ -43,7 +41,7 @@ def get_installed_apps_registry():
                     try:
                         subkey_name = winreg.EnumKey(sub_key, i)
                         with winreg.OpenKey(sub_key, subkey_name) as app_key:
-                            app_name, _ = winreg.QueryValueEx(app_key, 'DisplayName')
+                            app_name, _ = winreg.QueryValueEx(app_key, "DisplayName")
                             installed_apps.append(app_name)
                     except EnvironmentError:
                         continue
@@ -52,21 +50,54 @@ def get_installed_apps_registry():
 
 def get_open_windows():
     excluded_titles = ["AI Drone Assistant", "NVIDIA GeForce Overlay", "Windows Input Experience", "Program Manager"]
-    excluded_executables = ["NVIDIA Share.exe", "TextInputHost.exe", "Tk.exe", "conhost.exe", "explorer.exe",
-                            "CTkToplevel", 'Windows Input Experience', "SecurityHealthSystray.exe", "Steam.exe",
-                            "SearchApp.exe", "ApplicationFrameHost.exe", "ShellExperienceHost.exe", "MicrosoftEdge.exe",
-                            "MicrosoftEdgeCP.exe", "MicrosoftEdgeSH.exe", "python.exe", "pycharm64.exe", "pycharm64.exe",
-                            "Ctk", "Ctk.exe", "tk", "tk.exe", "Code", "Code.exe", "amdow.exe",
-                            "nvidia broadcast.exe", "nvidia broadcast ui.exe", "NVIDIA Share.exe",
-                            "NVIDIA Web Helper.exe", "nvsphelper64.exe", "NVIDIA GeForce Experience.exe",
-                            "nvcontainer.exe", "NVDisplay.Container.exe"]
+    excluded_executables = [
+        "NVIDIA Share.exe",
+        "TextInputHost.exe",
+        "Tk.exe",
+        "conhost.exe",
+        "explorer.exe",
+        "CTkToplevel",
+        "Windows Input Experience",
+        "SecurityHealthSystray.exe",
+        "Steam.exe",
+        "SearchApp.exe",
+        "ApplicationFrameHost.exe",
+        "ShellExperienceHost.exe",
+        "MicrosoftEdge.exe",
+        "MicrosoftEdgeCP.exe",
+        "MicrosoftEdgeSH.exe",
+        "python.exe",
+        "pycharm64.exe",
+        "pycharm64.exe",
+        "Ctk",
+        "Ctk.exe",
+        "tk",
+        "tk.exe",
+        "Code",
+        "Code.exe",
+        "amdow.exe",
+        "nvidia broadcast.exe",
+        "nvidia broadcast ui.exe",
+        "NVIDIA Share.exe",
+        "NVIDIA Web Helper.exe",
+        "nvsphelper64.exe",
+        "NVIDIA GeForce Experience.exe",
+        "nvcontainer.exe",
+        "NVDisplay.Container.exe",
+    ]
 
     windows = gw.getAllWindows()
     print(windows)
     open_windows_info = []
     for w in windows:
-        if (w.visible and not w.isMinimized and w.title and w.height > 100 and w.width > 100
-                and w.title not in excluded_titles):
+        if (
+            w.visible
+            and not w.isMinimized
+            and w.title
+            and w.height > 100
+            and w.width > 100
+            and w.title not in excluded_titles
+        ):
             hwnd = w._hWnd
             _, pid = win32process.GetWindowThreadProcessId(hwnd)
             process = psutil.Process(pid)
@@ -89,7 +120,7 @@ def get_window_text(hwnd):
 
 
 def get_active_window_title():
-    time.sleep(1) # Wait for the window to be fully active ToDo: Fix this part!
+    time.sleep(1)  # Wait for the window to be fully active ToDo: Fix this part!
     hwnd = GetForegroundWindow()
     return get_window_text(hwnd)
 
@@ -148,21 +179,21 @@ def search_registry_for_application(app_name):
                         skey_name = winreg.EnumKey(key, i)
                         skey = winreg.OpenKey(key, skey_name)
                         try:
-                            display_name = winreg.QueryValueEx(skey, 'DisplayName')[0]
+                            display_name = winreg.QueryValueEx(skey, "DisplayName")[0]
                             if app_name.lower() in display_name.lower():
                                 # Look for the executable in a 'DisplayIcon' field
                                 try:
-                                    executable_path = winreg.QueryValueEx(skey, 'DisplayIcon')[0]
+                                    executable_path = winreg.QueryValueEx(skey, "DisplayIcon")[0]
                                     # In case the path points to an icon, it usually contains a comma
                                     # followed by an icon index, e.g. "C:\Path\To\App.exe,0"
-                                    if ',' in executable_path:
-                                        executable_path = executable_path.split(',')[0]
+                                    if "," in executable_path:
+                                        executable_path = executable_path.split(",")[0]
                                     return executable_path
                                 except OSError:
                                     pass
 
                                 # If not found, fall back to 'UninstallString' as a last resort
-                                uninstall_string = winreg.QueryValueEx(skey, 'UninstallString')[0]
+                                uninstall_string = winreg.QueryValueEx(skey, "UninstallString")[0]
                                 # Here you would need to intelligently extract the executable path
                                 # This might involve more complex logic and is not guaranteed to work
                                 # for all applications as uninstall strings can vary significantly.
@@ -176,6 +207,7 @@ def search_registry_for_application(app_name):
             except OSError:
                 pass
     return None
+
 
 def find_best_match_window(partial_title, threshold=50):
     windows = open_windows_info()
@@ -226,6 +258,7 @@ def find_best_match_window(partial_title, threshold=50):
 #         print(f"{application_name} could not be found nor is open. Please ensure it is installed and accessible via system PATH.")
 #     return get_active_window_title()
 
+
 def activate_windowt_title(application_name):
     if application_name.lower() == "cmd":
         # If we know it's cmd, we can try activating an existing window or start a new one directly
@@ -234,7 +267,7 @@ def activate_windowt_title(application_name):
             # If we found a window, bring it to the foreground
             bring_to_foreground(hwnd)
         else:
-            os.startfile('cmd.exe')
+            os.startfile("cmd.exe")
         return get_active_window_title()
 
     app_path = None
@@ -243,9 +276,10 @@ def activate_windowt_title(application_name):
     # Attempt to find the application path for each word in application_name
     for word in words:
         try:
-            process = subprocess.run(['where', word], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-                                     shell=True)
-            output = process.stdout.strip().split('\n')
+            process = subprocess.run(
+                ["where", word], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True
+            )
+            output = process.stdout.strip().split("\n")
             if output:
                 app_path = output[0]
                 break  # Once we have found a path, we can break the loop
@@ -276,14 +310,13 @@ def activate_windowt_title(application_name):
             print(f"ERROR: Error opening application '{app_path}': {e}")
     else:
         print(
-            f"{application_name} could not be found nor is open. Please ensure it is installed and accessible via system PATH.")
+            f"{application_name} could not be found nor is open. Please ensure it is installed and accessible via system PATH."
+        )
 
     return get_active_window_title()
-
 
 
 if __name__ == "__main__":
     # active_title = activate_windowt_title("chrome")
     active_title = activate_windowt_title("Google Chrome")
     print(f"Active window title: {active_title}")
-
