@@ -1,8 +1,8 @@
-**PyWinAssistant: An artificial assistant** – **MIT Licensed** | **Public Release: December 31, 2023** |  Complies with federal coordinations AI Standards for Complex Adaptive Systems, Asilomar AI Principles and IEEE Global Initiative on Ethics of Autonomous and Intelligent Systems.
+**Singularity: An artificial assistant** – **MIT Licensed** | **Public Release: December 31, 2023** |  Complies with federal coordinations AI Standards for Complex Adaptive Systems, Asilomar AI Principles and IEEE Global Initiative on Ethics of Autonomous and Intelligent Systems.
 
 ---
 
-PyWinAssistant is the first open-source Artificial Narrow Intelligence to elicit spatial reasoning and perception as a generalist agentic framework Computer-Using-Agent that fully operates graphical-user-interfaces (GUIs) for Windows 10/11 **through direct OS-native semantic interaction**. It functions as a Computer-Using-Agent / Large-Action-Model, forming the foundation for a pure **symbolic spatial cognition framework** that enables artificial operation of a computer using only natural language, **without relying on computer vision, OCR, or pixel-level imaging**. PyWinAssistant emulates, plans, and simulates synthetic Human-Interface-Device (HID) interactions through **native Windows Accessibility APIs**, eliciting human-like abstraction across geometric, hierarchical, and temporal dimensions at an Operating-System level. This OS-integrated approach simulating spatial utilization of a computer provides a future-proof, generalized, modular, and dynamic ANI orchestration framework for multi-agent-driven automation, marking an important step in symbolic reasoning towards AGI.
+Singularity is the first open-source Artificial Narrow Intelligence to elicit spatial reasoning and perception as a generalist agentic framework Computer-Using-Agent that fully operates graphical-user-interfaces (GUIs) for Windows 10/11 **through direct OS-native semantic interaction**. It functions as a Computer-Using-Agent / Large-Action-Model, forming the foundation for a pure **symbolic spatial cognition framework** that enables artificial operation of a computer using only natural language, **without relying on computer vision, OCR, or pixel-level imaging**. Singularity emulates, plans, and simulates synthetic Human-Interface-Device (HID) interactions through **native Windows Accessibility APIs**, eliciting human-like abstraction across geometric, hierarchical, and temporal dimensions at an Operating-System level. This OS-integrated approach simulating spatial utilization of a computer provides a future-proof, generalized, modular, and dynamic ANI orchestration framework for multi-agent-driven automation, marking an important step in symbolic reasoning towards AGI.
 
 **Key Features:**
 *   **Not relying only on Imaging Pipeline**: Operates exclusively through Windows UI Automation (UIA) and programmatic GUI semantics, enabling universal workflow orchestration.
@@ -11,14 +11,14 @@ PyWinAssistant is the first open-source Artificial Narrow Intelligence to elicit
 *   **Visual Perception**: A single screenshot can elicit comprehension and perception with attention to detail by visualizing goal intent and environment changes in a spatial space over time, can be fine-tuned to look up for visual cues, bugs, causal reasoning bugs, static, semantic grounding, errors, corruption...
 *   **Unified Automation**: Automatic element detection. Combines GUI, system, and web automation under one Python API. Eliminates context-switching between tools.
 *   **AI-Powered Script Generation**: Translates natural language or demonstrations into any kind of code inside any IDE or text edit areas.
-*   **Self-Healing Workflows**: Auto-adjusts to UI changes (e.g., element ID shifts). Reducing maintenance overhead, making PyWinAssistant's algorithm future-proof.
+*   **Self-Healing Workflows**: Auto-adjusts to UI changes (e.g., element ID shifts). Reducing maintenance overhead, making Singularity's algorithm future-proof.
 *   **AI/ML Integration**: Using NLP to generate scripts (e.g., “Automate Application” → plan of test execution steps in JSON) with self-correcting selectors.
 *   **Cross-Context Automation**: Seamlessly combining GUI, web, and API workflows in a Pythonic way, unifying disjointed automation methods (GUI, API, web) into a single framework.
 *   **Accessibility**: Enhancing accessibility for users with different needs, enabling voice or simple text commands to control complex actions. 
 *   **Generalization**: Elicits spatial cognition to understand and execute a wide range of commands in a natural, intuitive manner.
-*    **Small and compact**: PyWinAssistant functions as an example algorithm of a modular and generalized computer assistant framework that elicits spatial cognition.
+*    **Small and compact**: Singularity functions as an example algorithm of a modular and generalized computer assistant framework that elicits spatial cognition.
 
-PyWinAssistant has its own set of **reasoning agents**, utilizing Visualization-of-Thought (VoT) and Chain-of-Thought (CoT) to enhance generalization, dynamically simulating actions through abstract GUI semantic dimensions rather than visual processing, making it **future-proof** for next-generation **LLM models**. By **visualizing interface contents** to dynamically **simulate and plan actions** over **abstract GUI semantic dimensions, concepts, and differentials**, PyWinAssistant **redefines computer vision automation**, enabling **high-efficiency visual processing** at a fraction of traditional computational costs. PyWinAssistant has achieved **real-time spatial perception** at an **Operating-System level**, allowing for **memorization of visual cues and tracking of on-screen changes over time**.
+Singularity has its own set of **reasoning agents**, utilizing Visualization-of-Thought (VoT) and Chain-of-Thought (CoT) to enhance generalization, dynamically simulating actions through abstract GUI semantic dimensions rather than visual processing, making it **future-proof** for next-generation **LLM models**. By **visualizing interface contents** to dynamically **simulate and plan actions** over **abstract GUI semantic dimensions, concepts, and differentials**, Singularity **redefines computer vision automation**, enabling **high-efficiency visual processing** at a fraction of traditional computational costs. Singularity has achieved **real-time spatial perception** at an **Operating-System level**, allowing for **memorization of visual cues and tracking of on-screen changes over time**.
 
 ---
 
@@ -27,7 +27,7 @@ Released before key breakthroughs in AI for Spatial Reasoning, it predates:
 *   **Anthropic** [**Claude’s Computer-Use Agent**](https://www.anthropic.com/news/3-5-models-and-computer-use) (October 22, 2024)
 *   **OpenIA** [**ChatGPT’s Operator Computer-Using Agent (CUA)**](https://openai.com/index/introducing-operator/) (January 23, 2025)
 
-PyWinAssistant represents a major paradigm shift in AI and automation by pioneering **pure symbolic computer interaction** bridging **human intent with GUI automation at an OS level** through these breakthroughs:
+Singularity represents a major paradigm shift in AI and automation by pioneering **pure symbolic computer interaction** bridging **human intent with GUI automation at an OS level** through these breakthroughs:
 *   **First Agent** to bypass OCR/imaging for Computer-Using-Agent GUI automation.
 *   **First Framework** using Windows UIA as the primary spatial perception channel.
 *   **First System** demonstrating OS-native hierarchical-temporal reasoning.
@@ -38,7 +38,7 @@ PyWinAssistant represents a major paradigm shift in AI and automation by pioneer
 **Traditional Approach**:  
 Automation tools require scripting (e.g., AutoHotkey) or API integration (e.g., Selenium).  
 
-**PyWinAssistant Breakthrough**:  
+**Singularity Breakthrough**:  
 ```python
 # True generalization for natural language directly driving UI actions
 assistant("Play Daft Punk on Spotify and email the lyrics to my friend")
@@ -50,7 +50,7 @@ assistant("Play Daft Punk on Spotify and email the lyrics to my friend")
   - Map to UI elements (Spotify play button, Outlook compose window)
   - Generate adaptive workflows  
 
-**PyWinAssistant Innovation**: Eliminates the need for:
+**Singularity Innovation**: Eliminates the need for:
 - Predefined API integrations
 - XPath/CSS selector knowledge
 - Manual error handling
@@ -61,7 +61,7 @@ assistant("Play Daft Punk on Spotify and email the lyrics to my friend")
 **Traditional Limitation**:  
 Tools operate in app silos (e.g., Power Automate connectors).  
 
-**PyWinAssistant Innovation**:  
+**Singularity Innovation**:  
 ```python
 # Notes:
 # The full set of steps generation from the Assistant is working flawlessly, but in-step modifier and memory-content retrieval was purposely disabled and commented into the code- [def act()](https://github.com/a-real-ai/pywinassistant/blob/6aae4e514a0dc661f7ed640181663f483972bc1e/core/driver.py#L648C1-L648C8)
@@ -71,7 +71,7 @@ Tools operate in app silos (e.g., Power Automate connectors).
 assistant("Find for the best and cheapest flight to Mexico, and also look for local hotels and suggest me on new tabs the best on cultural options")
 assistant("Look for various pizza coupons for anything but pineapple, fill in the details to order and show me the results")
 
-# PyWinAssistant is highly modular (example):
+# Singularity is highly modular (example):
 def workflow():
     song = assistant(goal="get the current track")  # UIA
     write_action(f"Review '{song}': Great bassline!", app="Notepad")  # Win32
@@ -93,7 +93,7 @@ assistant(f"Get the current song playing and in notepad put the title as Review 
 **Traditional Model**:  
 Deterministic scripts fail on UI changes.  
 
-**PyWinAssistant’s Solution**:  
+**Singularity’s Solution**:  
 ```python
 # Adaptive element discovery
 def fast_action(goal):
@@ -131,11 +131,11 @@ ControlClick, x=152 y=311  # Fragile coordinates
 assistant("Like this song")  # Language-first
 ```
 
-| **Shift Metrics**:    | Traditional Tools | PyWinAssistant |
-|-----------------------|-------------------|----------------|
-| Learning Curve        | Days, even months | Minutes        |
-| Cross-App Workflows   | Manual Integration| Automatic      |
-| Maintenance Overhead  | High              | LLM-AutoPatch  |
+| **Shift Metrics**:    | Traditional Tools | Singularity |
+|-----------------------|-------------------|-------------|
+| Learning Curve        | Days, even months | Minutes     |
+| Cross-App Workflows   | Manual Integration| Automatic   |
+| Maintenance Overhead  | High              | LLM-AutoPatch |
 
 ---
 
@@ -161,7 +161,7 @@ By **directly interfacing with Windows underlying UI hierarchy**, it achieves r
 *   **Precision Abstraction**: Mathematical modeling of GUI relationships rather than visual pattern matching.
 
   **Image-Free by Design (Core Architecture)**  
-While some projects *require* visual processing for fundamental operation, PyWinAssistant achieves **complete GUI interaction capability without an imaging pipeline** through:  
+While some projects *require* visual processing for fundamental operation, Singularity achieves **complete GUI interaction capability without an imaging pipeline** through:  
 
 1. **Native OS Semantic Access**  
    Direct Windows UIA API integration provides full control metadata:  
@@ -173,7 +173,7 @@ While some projects *require* visual processing for fundamental operation, PyWin
 2. **Imaging Module**  
 
    ```diff
-   # PyWinAssistant imaging functions like Pixel level visualization can be enabled as real-time spatial perception with memorization of visual cues and tracking of on-screen changes over time.
+   # Singularity imaging functions like Pixel level visualization can be enabled as real-time spatial perception with memorization of visual cues and tracking of on-screen changes over time.
    + Capable of planning successful sets of highly technical steps to perform operations on a computer at an OS level, with only one screenshot.
    + Pixel level visualization.
    + Visual hash matching can be enabled for dynamic elements. 
@@ -181,16 +181,16 @@ While some projects *require* visual processing for fundamental operation, PyWin
    # The experimental features of OCR were added but not fully developed as it was not necessary for the current implementation as the assistant currently works too well without it.
    ```
 
-| **Key Differentiation** | PyWinAssistant | Traditional Automation |  
-|-|----------------|------------------------|  
+| **Key Differentiation** | Singularity | Traditional Automation |  
+|-|-------------|------------------------|  
 | **Primary Perception** | UIA Metadata | Screenshots/OCR |  
 | **Vision Dependency** | Optional Add-on | Required Core |  
-| **Headless Ready** | ✅ Native | ❌ Requires virtual display |  
+| **Headless Ready** | ✅ Native | ❌ Requires virtual display |
 
 ---
 
 ### **Development Notes:**
-PyWinAssistant is limited to model's intelligence and time to inference. New advancements on LLM's are required to reach for a complete Artificial General Intelligence system with Artificial Narrow Intelligences managing it.
+Singularity is limited to model's intelligence and time to inference. New advancements on LLM's are required to reach for a complete Artificial General Intelligence system with Artificial Narrow Intelligences managing it.
 The system's autonomous task decomposition leverages **native semantic differentials** rather than visual changes, visual changes can be optionally activated for real-time image corruption analysis in GUI/Screen.
 Long-term memory and self-learning mechanisms were designed to evolve **symbolic state representations**, and can be also represented into visual patterns, aligning with AGI development.
 
@@ -200,7 +200,7 @@ https://arxiv.org/abs/2404.03622
 
 # Overview
 
-PyWinAssistant includes built-in assistant features designed to enhance human-computer interaction for all users. It integrates real-time voice recognition, customizable assistant personalities, subtitles, and chat functionality.
+Singularity includes built-in assistant features designed to enhance human-computer interaction for all users. It integrates real-time voice recognition, customizable assistant personalities, subtitles, and chat functionality.
 Talk with your computer friendly and naturally to perform any User Interface activity.
 Use natural language to operate freely your Windows Operating System.
 Generates and plans test cases of your User Interface applications for continuous testing on any Win32api supported application by simply using natural language.
@@ -318,7 +318,7 @@ add your API Key in /core/core_api.py  ->  line 3: client = OpenAI(api_key='inse
 add your API Key in /core/core_imaging.py  ->  line 12: api_key = 'insert_your_api_key_here'
 
 # Install requirements:
-cd pywinassistant
+cd singularity-ailayer
 pip install -r .\requirements.txt
 
 # Execute the assistant:
